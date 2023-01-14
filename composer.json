@@ -1,0 +1,74 @@
+{
+    "name": "oneduo/laravel-recaptcha-enterprise",
+    "description": "This is my package laravel-recaptcha-enterprise",
+    "keywords": [
+        "oneduo",
+        "laravel",
+        "laravel-recaptcha-enterprise"
+    ],
+    "homepage": "https://github.com/oneduo/laravel-recaptcha-enterprise",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Charaf Rezrazi",
+            "email": "charaf@rezrazi.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "google/cloud-recaptcha-enterprise": "^1.2",
+        "illuminate/contracts": "^9.0",
+        "spatie/laravel-package-tools": "^1.13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5",
+        "spatie/laravel-ray": "^1.26"
+    },
+    "autoload": {
+        "psr-4": {
+            "Oneduo\\RecaptchaEnterprise\\": "src",
+            "Oneduo\\RecaptchaEnterprise\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Oneduo\\RecaptchaEnterprise\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Oneduo\\RecaptchaEnterprise\\RecaptchaEnterpriseServiceProvider"
+            ],
+            "aliases": {
+                "RecaptchaEnterprise": "Oneduo\\RecaptchaEnterprise\\Facades\\RecaptchaEnterprise"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
