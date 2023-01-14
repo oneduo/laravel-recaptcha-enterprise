@@ -22,8 +22,7 @@ class RecaptchaEnterprise extends Facade
     }
 
     /**
-     * @param string $token
-     *
+     * @param  string  $token
      * @return RecaptchaEnterpriseService
      *
      * @throws ApiException
