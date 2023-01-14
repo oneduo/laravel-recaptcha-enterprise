@@ -11,7 +11,7 @@ use Throwable;
 class InvalidTokenException extends Exception
 {
     public function __construct(
-        string $message = "",
+        string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
         public readonly ?int $reason = null,

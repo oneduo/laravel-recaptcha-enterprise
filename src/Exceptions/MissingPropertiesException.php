@@ -11,7 +11,7 @@ use Throwable;
 class MissingPropertiesException extends Exception
 {
     public function __construct(
-        string $message = "",
+        string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
         private readonly ?Assessment $assessment = null,

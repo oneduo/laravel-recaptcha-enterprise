@@ -18,8 +18,11 @@ use Oneduo\RecaptchaEnterprise\Exceptions\MissingPropertiesException;
 class RecaptchaEnterpriseService
 {
     public readonly RecaptchaEnterpriseServiceClient $client;
+
     public readonly Assessment $response;
+
     public ?float $score;
+
     public ?TokenProperties $properties;
 
     public function __construct()
@@ -76,7 +79,7 @@ class RecaptchaEnterpriseService
         }
 
         // throw an error if the token is invalid
-        if (!$this->properties->getValid()) {
+        if (! $this->properties->getValid()) {
             throw InvalidTokenException::make($this->properties->getInvalidReason());
         }
 

@@ -21,9 +21,8 @@ class Recaptcha implements Rule
     }
 
     /**
-     * @param string $attribute
-     * @param string $value
-     *
+     * @param  string  $attribute
+     * @param  string  $value
      * @return bool
      *
      * @throws ApiException
