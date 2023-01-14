@@ -7,27 +7,12 @@
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-recaptcha-enterprise.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-recaptcha-enterprise)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Installation
 
 You can install the package via composer:
 
 ```bash
 composer require oneduo/laravel-recaptcha-enterprise
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-recaptcha-enterprise-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -40,20 +25,58 @@ This is the contents of the published config file:
 
 ```php
 return [
+    'project_name' => env('RECAPTCHA_ENTERPRISE_PROJECT_NAME'),
+
+    'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),
+
+    'use_credentials' => env('RECAPTCHA_ENTERPRISE_USE_CREDENTIALS', 'default'),
+
+    'credentials' => [
+        'default' => [
+            'type' => 'service_account',
+            'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
+            'private_key_id' => env('RECAPTCHA_ENTERPRISE_KEY_ID'),
+            'private_key' => env('RECAPTCHA_ENTERPRISE_PRIVATE_KEY'),
+            'client_email' => $email = env('RECAPTCHA_ENTERPRISE_CLIENT_EMAIL'),
+            'client_id' => env('RECAPTCHA_ENTERPRISE_CLIENT_ID'),
+            'auth_uri' => 'https://accounts.google.com/o/oauth2/auth',
+            'token_uri' => 'https://accounts.google.com/o/oauth2/token',
+            'auth_provider_x509_cert_url' => 'https://www.googleapis.com/oauth2/v1/certs',
+            'client_x509_cert_url' => 'https://www.googleapis.com/robot/v1/metadata/x509/' . $email,
+        ],
+    ],
 ];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-recaptcha-enterprise-views"
 ```
 
 ## Usage
 
+@todo: add more info
+
 ```php
-$recaptchaEnterprise = new Oneduo\RecaptchaEnterprise();
-echo $recaptchaEnterprise->echoPhrase('Hello, Oneduo!');
+<?php
+
+declare(strict_types=1);
+
+namespace Oneduo\RecaptchaEnterprise\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Oneduo\RecaptchaEnterprise\Rules\Recaptcha;
+
+class TestRequest extends FormRequest
+{
+    public function rules(): array
+    {
+        return [
+            'g-recaptcha-response' => ['required', new Recaptcha()],
+        ];
+    }
+
+    public function authorize(): bool
+    {
+        return true;
+    }
+}
+
 ```
 
 ## Testing

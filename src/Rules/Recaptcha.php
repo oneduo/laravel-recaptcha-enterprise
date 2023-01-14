@@ -12,7 +12,7 @@ use Oneduo\RecaptchaEnterprise\Exceptions\InvalidTokenException;
 use Oneduo\RecaptchaEnterprise\Exceptions\MissingPropertiesException;
 use Oneduo\RecaptchaEnterprise\Facades\RecaptchaEnterprise;
 
-class RecaptchaRule implements Rule
+class Recaptcha implements Rule
 {
     private ?int $reason = null;
 
