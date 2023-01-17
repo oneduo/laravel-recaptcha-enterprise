@@ -36,8 +36,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Oneduo\\RecaptchaEnterprise\\": "src",
-            "Oneduo\\RecaptchaEnterprise\\Database\\Factories\\": "database/factories"
+            "Oneduo\\RecaptchaEnterprise\\": "src"
         }
     },
     "autoload-dev": {
