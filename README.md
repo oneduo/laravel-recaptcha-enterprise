@@ -7,6 +7,30 @@
 
 Wrapper to use Google reCAPTCHA Enterprise with Laravel. Provides a handy validation rule to verify your token's score.
 
+## Prerequisites
+
+**TLDR;** You may want to follow
+the [official documentation](https://cloud.google.com/recaptcha-enterprise/docs/set-up-google-cloud) to get started.
+
+### 1. Enable the reCAPTCHA Enterprise API
+
+On your Google Cloud console, go ahead and enable the reCAPTCHA Enterprise API.
+
+### 2. Create a service account
+
+Create a service account with the following roles:
+
+- reCAPTCHA Enterprise Agent
+
+### 3. Create a key
+
+Create a key for your service account and download it as a JSON file.
+
+### 4. Use your credentials
+
+Use your credentials by setting the appropriate values in `config/recaptcha-enterprise.php` or by setting the
+environment variables.
+
 ## Installation
 
 You can install the package via composer:
@@ -25,8 +49,6 @@ This is the contents of the published config file:
 
 ```php
 return [
-    'project_name' => env('RECAPTCHA_ENTERPRISE_PROJECT_NAME'),
-
     'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),
 
     'use_credentials' => env('RECAPTCHA_ENTERPRISE_USE_CREDENTIALS', 'default'),
@@ -35,7 +57,7 @@ return [
         'default' => [
             'type' => 'service_account',
             'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
-            'private_key_id' => env('RECAPTCHA_ENTERPRISE_KEY_ID'),
+            'private_key_id' => env('RECAPTCHA_ENTERPRISE_PRIVATE_KEY_ID'),
             'private_key' => env('RECAPTCHA_ENTERPRISE_PRIVATE_KEY'),
             'client_email' => $email = env('RECAPTCHA_ENTERPRISE_CLIENT_EMAIL'),
             'client_id' => env('RECAPTCHA_ENTERPRISE_CLIENT_ID'),
@@ -50,7 +72,9 @@ return [
 
 ## Usage
 
-@todo: add more info
+You may start using the reCAPTCHA validation rule by implementing the
+available `Oneduo\RecaptchaEnterprise\Rules\Recaptcha` rule in your business logic, here's an example of a `FormRequest`
+implementation:
 
 ```php
 <?php
@@ -78,6 +102,17 @@ class TestRequest extends FormRequest
 }
 
 ```
+
+### Configuring the threshold
+
+When validating a token, you may want to set a threshold for the score. You can do so setting the `score_threshold`
+config value:
+
+```php
+'score_threshold' => 0.7,
+```
+
+Default threshold is `0.5`
 
 ## Testing
 

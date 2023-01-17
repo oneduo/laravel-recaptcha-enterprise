@@ -3,17 +3,17 @@
 declare(strict_types=1);
 
 return [
-    'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
-
     'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),
 
     'use_credentials' => env('RECAPTCHA_ENTERPRISE_USE_CREDENTIALS', 'default'),
+
+    'score_threshold' => env('RECAPTCHA_ENTERPRISE_SCORE_THRESHOLD', 0.5),
 
     'credentials' => [
         'default' => [
             'type' => 'service_account',
             'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
-            'private_key_id' => env('RECAPTCHA_ENTERPRISE_KEY_ID'),
+            'private_key_id' => env('RECAPTCHA_ENTERPRISE_PRIVATE_KEY_ID'),
             'private_key' => env('RECAPTCHA_ENTERPRISE_PRIVATE_KEY'),
             'client_email' => $email = env('RECAPTCHA_ENTERPRISE_CLIENT_EMAIL'),
             'client_id' => env('RECAPTCHA_ENTERPRISE_CLIENT_ID'),
