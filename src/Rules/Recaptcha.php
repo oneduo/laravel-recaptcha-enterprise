@@ -31,7 +31,7 @@ class Recaptcha implements Rule
     public function passes($attribute, $value): bool
     {
         try {
-            $assessment = RecaptchaEnterprise::handle($value);
+            $recaptcha = RecaptchaEnterprise::handle($value);
         } catch (InvalidTokenException $exception) {
             $this->reason = $exception->reason;
 
@@ -42,14 +42,14 @@ class Recaptcha implements Rule
         $validInterval = true;
 
         if ($this->action) {
-            $validAction = $assessment->hasValidAction($this->action);
+            $validAction = $recaptcha->hasValidAction($this->action);
         }
 
         if ($this->interval) {
-            $validInterval = $assessment->hasValidTimestamp($this->interval);
+            $validInterval = $recaptcha->hasValidTimestamp($this->interval);
         }
 
-        return $assessment->hasValidScore() && $validAction && $validInterval;
+        return $recaptcha->hasValidScore() && $validAction && $validInterval;
     }
 
     public function action(?string $action = null): static

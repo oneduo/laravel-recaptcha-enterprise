@@ -4,8 +4,22 @@ declare(strict_types=1);
 
 use Oneduo\RecaptchaEnterprise\Facades\RecaptchaEnterprise;
 
-it('returns a score for a valid token', function () {
-    $token = fake()->word;
+it('handles a valid token', function () {
+    RecaptchaEnterprise::fake();
 
-    $assessment = RecaptchaEnterprise::handle($token);
+    $result = RecaptchaEnterprise::handle(fake()->sentence)->isValid();
+
+    expect($result)->toBeTrue();
 });
+
+it('handles an invalid token', function () {
+    RecaptchaEnterprise::fake();
+
+    RecaptchaEnterprise::setScore(0);
+    RecaptchaEnterprise::setThreshold(1);
+
+    $result = RecaptchaEnterprise::handle(fake()->sentence)->isValid();
+
+    expect($result)->toBeFalse();
+});
+

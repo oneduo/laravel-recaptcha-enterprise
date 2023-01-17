@@ -5,19 +5,18 @@ declare(strict_types=1);
 namespace Oneduo\RecaptchaEnterprise\Services;
 
 use Carbon\CarbonInterval;
-use Closure;
 use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
 use Google\Cloud\RecaptchaEnterprise\V1\Event;
-use Google\Cloud\RecaptchaEnterprise\V1\RecaptchaEnterpriseServiceClient;
+use Google\Cloud\RecaptchaEnterprise\V1\RecaptchaEnterpriseServiceClient as RecaptchaClient;
 use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Queue;
+use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaEnterpriseContract;
 use Oneduo\RecaptchaEnterprise\Exceptions\InvalidTokenException;
 use Oneduo\RecaptchaEnterprise\Exceptions\MissingPropertiesException;
 
-class RecaptchaEnterpriseService
+class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
 {
-    public readonly RecaptchaEnterpriseServiceClient $client;
+    public readonly RecaptchaClient $client;
 
     public readonly Assessment $response;
 
@@ -27,12 +26,7 @@ class RecaptchaEnterpriseService
 
     public function __construct()
     {
-        $this->buildClient();
-    }
-
-    public function buildClient(): void
-    {
-        $this->client = app(RecaptchaEnterpriseServiceClient::class, [
+        $this->client = app(RecaptchaClient::class, [
             'options' => [
                 'credentials' => static::credentials(),
             ],
@@ -41,7 +35,7 @@ class RecaptchaEnterpriseService
 
     private function projectName(): string
     {
-        return RecaptchaEnterpriseServiceClient::projectName(config('recaptcha-enterprise.project_name'));
+        return RecaptchaClient::projectName(data_get(static::credentials(), 'project_id'));
     }
 
     private function siteKey(): string
@@ -79,7 +73,7 @@ class RecaptchaEnterpriseService
         }
 
         // throw an error if the token is invalid
-        if (! $this->properties->getValid()) {
+        if (!$this->properties->getValid()) {
             throw InvalidTokenException::make($this->properties->getInvalidReason());
         }
 
@@ -131,24 +125,23 @@ class RecaptchaEnterpriseService
         return Carbon::parse($timestamp)->lessThanOrEqualTo(now()->sub($interval));
     }
 
+    public function isValid(?string $action = null, ?CarbonInterval $interval = null): bool
+    {
+        $valid = $this->hasValidScore();
+
+        if ($action) {
+            $valid = $valid && $this->hasValidAction($action);
+        }
+
+        if ($interval) {
+            $valid = $valid && $this->hasValidTimestamp($interval);
+        }
+
+        return $valid;
+    }
+
     public function close(): void
     {
         $this->client->close();
-    }
-
-    public function fake(?Closure $callback = null)
-    {
-        if ($callback instanceof Closure) {
-            return $callback($this);
-        }
-
-        Queue::fake();
-        $this->score = 0.9;
-
-        $this->properties = (new TokenProperties())
-            ->setAction('test')
-            ->setCreateTime((new \Google\Protobuf\Timestamp())->setSeconds(now()->subMinutes(5)->getTimestamp()));
-
-        return $this;
     }
 }

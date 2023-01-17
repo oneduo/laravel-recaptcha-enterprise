@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return [
-    'project_name' => env('RECAPTCHA_ENTERPRISE_PROJECT_NAME'),
+    'project_id' => env('RECAPTCHA_ENTERPRISE_PROJECT_ID'),
 
     'site_key' => env('RECAPTCHA_ENTERPRISE_SITE_KEY'),
 
