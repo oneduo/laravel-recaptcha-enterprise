@@ -10,6 +10,7 @@ use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaEnterpriseContract;
 class FakeRecaptchaEnterpriseEnterprise implements RecaptchaEnterpriseContract
 {
     public float $score = 1.0;
+
     public float $threshold = 0.0;
 
     public function handle(string $token): static

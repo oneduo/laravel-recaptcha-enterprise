@@ -73,7 +73,7 @@ class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
         }
 
         // throw an error if the token is invalid
-        if (!$this->properties->getValid()) {
+        if (! $this->properties->getValid()) {
             throw InvalidTokenException::make($this->properties->getInvalidReason());
         }
 

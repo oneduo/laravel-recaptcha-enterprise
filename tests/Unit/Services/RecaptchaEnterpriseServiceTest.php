@@ -22,4 +22,3 @@ it('handles an invalid token', function () {
 
     expect($result)->toBeFalse();
 });
-
