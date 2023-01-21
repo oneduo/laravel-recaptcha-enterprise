@@ -4,8 +4,17 @@
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/oneduo/laravel-recaptcha-enterprise/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/oneduo/laravel-recaptcha-enterprise/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/oneduo/laravel-recaptcha-enterprise/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/oneduo/laravel-recaptcha-enterprise/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/oneduo/laravel-recaptcha-enterprise.svg?style=flat-square)](https://packagist.org/packages/oneduo/laravel-recaptcha-enterprise)
+[![codecov](https://codecov.io/github/oneduo/laravel-recaptcha-enterprise/branch/main/graph/badge.svg)](https://codecov.io/github/oneduo/laravel-recaptcha-enterprise)
 
 Wrapper to use Google reCAPTCHA Enterprise with Laravel. Provides a handy validation rule to verify your token's score.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+
 
 ## Prerequisites
 
@@ -39,13 +48,15 @@ You can install the package via composer:
 composer require oneduo/laravel-recaptcha-enterprise
 ```
 
+## Configuration
+
 You can publish the config file with:
 
 ```bash
 php artisan vendor:publish --tag="laravel-recaptcha-enterprise-config"
 ```
 
-This is the contents of the published config file:
+This is the contents of the published config file, you are required to set the variables accordingly:
 
 ```php
 return [
