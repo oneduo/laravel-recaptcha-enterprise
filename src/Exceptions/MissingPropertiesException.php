@@ -14,9 +14,9 @@ class MissingPropertiesException extends Exception
         parent::__construct('No properties provided in the assessment');
     }
 
-    public static function forAssessment(?Assessment $assessment = null): static
+    public static function forAssessment(?Assessment $assessment = null): self
     {
-        return new static(assessment: $assessment);
+        return new self(assessment: $assessment);
     }
 
     /**

@@ -17,9 +17,9 @@ class InvalidTokenException extends Exception
         ));
     }
 
-    public static function forReason(?int $reason = null): static
+    public static function forReason(?int $reason = null): self
     {
-        return new static(reason: $reason);
+        return new self(reason: $reason);
     }
 
     /**
