@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-recaptcha-enterprise` will be documented in this file.
 
+## v0.1.1 - 2023-01-21
+
+**Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.1.0...v0.1.1
+
 ## v0.1.0 - 2023-01-17
 
 ### What's Changed
