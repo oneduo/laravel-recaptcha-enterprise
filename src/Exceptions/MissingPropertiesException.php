@@ -6,31 +6,26 @@ namespace Oneduo\RecaptchaEnterprise\Exceptions;
 
 use Exception;
 use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
-use Throwable;
 
 class MissingPropertiesException extends Exception
 {
-    public function __construct(
-        string $message = '',
-        int $code = 0,
-        ?Throwable $previous = null,
-        private readonly ?Assessment $assessment = null,
-    ) {
-        parent::__construct($message, $code, $previous);
-    }
-
-    public static function make(?Assessment $assessment = null): static
+    public function __construct(public ?Assessment $assessment = null)
     {
-        return new static(
-            message: 'Missing properties in the assessment',
-            assessment: $assessment,
-        );
+        parent::__construct('No properties provided in the assessment');
     }
 
+    public static function forAssessment(?Assessment $assessment = null): static
+    {
+        return new static(assessment: $assessment);
+    }
+
+    /**
+     * @codeCoverageIgnore
+     */
     public function context(): array
     {
         return [
-            'assessment' => $this->assessment,
+            'assessment' => $this->assessment?->serializeToJsonString(),
         ];
     }
 }

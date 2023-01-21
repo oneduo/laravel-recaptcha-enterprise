@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Oneduo\RecaptchaEnterprise\Tests;
 
+use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
 use Oneduo\RecaptchaEnterprise\RecaptchaEnterpriseServiceProvider;
+use Oneduo\RecaptchaEnterprise\Tests\Mocks\FakeRecaptchaEnterprise;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -14,5 +16,10 @@ class TestCase extends Orchestra
         return [
             RecaptchaEnterpriseServiceProvider::class,
         ];
+    }
+
+    protected function fakeRecaptchaEnterprise(): void
+    {
+        $this->swap(RecaptchaContract::class, new FakeRecaptchaEnterprise());
     }
 }

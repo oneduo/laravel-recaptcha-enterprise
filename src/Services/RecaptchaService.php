@@ -10,19 +10,22 @@ use Google\Cloud\RecaptchaEnterprise\V1\Event;
 use Google\Cloud\RecaptchaEnterprise\V1\RecaptchaEnterpriseServiceClient as RecaptchaClient;
 use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties;
 use Illuminate\Support\Carbon;
-use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaEnterpriseContract;
+use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
 use Oneduo\RecaptchaEnterprise\Exceptions\InvalidTokenException;
 use Oneduo\RecaptchaEnterprise\Exceptions\MissingPropertiesException;
 
-class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
+/**
+ * @codeCoverageIgnore Handled by a mock
+ */
+class RecaptchaService implements RecaptchaContract
 {
-    public readonly RecaptchaClient $client;
+    public RecaptchaClient $client;
 
-    public readonly Assessment $response;
-
-    public ?float $score;
+    public Assessment $assessment;
 
     public ?TokenProperties $properties;
+
+    public ?float $score;
 
     public function __construct()
     {
@@ -33,69 +36,71 @@ class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
         ]);
     }
 
-    private function projectName(): string
-    {
-        return RecaptchaClient::projectName(data_get(static::credentials(), 'project_id'));
-    }
-
-    private function siteKey(): string
-    {
-        return config('recaptcha-enterprise.site_key');
-    }
-
-    public static function credentials(): array
+    protected static function credentials(): array
     {
         $useCredentials = config('recaptcha-enterprise.use_credentials');
 
         return data_get(config('recaptcha-enterprise.credentials'), $useCredentials, []);
     }
 
+    protected function projectName(): string
+    {
+        return RecaptchaClient::projectName(data_get(static::credentials(), 'project_id'));
+    }
+
+    protected function siteKey(): string
+    {
+        return config('recaptcha-enterprise.site_key');
+    }
+
     /**
+     * Assess the token against Google reCAPTCHA Enterprise
+     *
      * @throws MissingPropertiesException
      * @throws InvalidTokenException
      * @throws \Google\ApiCore\ApiException
      */
-    public function handle(string $token): static
+    public function assess(string $token): static
     {
-        $event = $this->event($token);
+        $this->initAssessmentForEvent($this->event($token));
 
-        $assessment = $this->assessment($event);
-
-        $this->response = $this->client->createAssessment($this->projectName(), $assessment);
+        // we run the assessment through the reCAPTCHA Enterprise API client
+        $this->assessment = $this->client->createAssessment($this->projectName(), $this->assessment);
 
         // The SDK documentation recommends closing the connection after each request.
         $this->close();
 
-        $this->properties = $this->response->getTokenProperties();
+        $this->properties = $this->assessment->getTokenProperties();
 
+        // throw an error if no properties are returned
         if ($this->properties === null) {
-            throw MissingPropertiesException::make($assessment);
+            throw MissingPropertiesException::forAssessment($this->assessment);
         }
 
         // throw an error if the token is invalid
         if (! $this->properties->getValid()) {
-            throw InvalidTokenException::make($this->properties->getInvalidReason());
+            throw InvalidTokenException::forReason($this->properties->getInvalidReason());
         }
 
-        $this->score = $this->response->getRiskAnalysis()?->getScore();
+        // set the score
+        $this->score = $this->assessment->getRiskAnalysis()?->getScore();
 
         return $this;
     }
 
     protected function event(string $token): Event
     {
-        return (new Event())
+        return app(Event::class)
             ->setSiteKey($this->siteKey())
             ->setToken($token);
     }
 
-    protected function assessment(Event $event): Assessment
+    protected function initAssessmentForEvent(Event $event): void
     {
-        return (new Assessment())
-            ->setEvent($event);
+        $this->assessment = app(Assessment::class)->setEvent($event);
     }
 
-    public function hasValidScore(): bool
+    public function validateScore(): bool
     {
         $threshold = config('recaptcha-enterprise.score_threshold');
 
@@ -113,12 +118,12 @@ class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
         return $this->score >= $threshold;
     }
 
-    public function hasValidAction(string $action): bool
+    public function validateAction(string $action): bool
     {
         return $this->properties->getAction() === $action;
     }
 
-    public function hasValidTimestamp(CarbonInterval $interval): bool
+    public function validateCreationTime(CarbonInterval $interval): bool
     {
         $timestamp = $this->properties->getCreateTime()?->getSeconds();
 
@@ -127,20 +132,20 @@ class RecaptchaEnterpriseService implements RecaptchaEnterpriseContract
 
     public function isValid(?string $action = null, ?CarbonInterval $interval = null): bool
     {
-        $valid = $this->hasValidScore();
+        $valid = $this->validateScore();
 
         if ($action) {
-            $valid = $valid && $this->hasValidAction($action);
+            $valid = $valid && $this->validateAction($action);
         }
 
         if ($interval) {
-            $valid = $valid && $this->hasValidTimestamp($interval);
+            $valid = $valid && $this->validateCreationTime($interval);
         }
 
         return $valid;
     }
 
-    public function close(): void
+    protected function close(): void
     {
         $this->client->close();
     }

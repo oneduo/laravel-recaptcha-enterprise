@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Oneduo\RecaptchaEnterprise;
 
+use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
+use Oneduo\RecaptchaEnterprise\Services\RecaptchaService;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -15,5 +17,10 @@ class RecaptchaEnterpriseServiceProvider extends PackageServiceProvider
             ->name('laravel-recaptcha-enterprise')
             ->hasTranslations()
             ->hasConfigFile();
+    }
+
+    public function packageBooted(): void
+    {
+        $this->app->singleton(RecaptchaContract::class, fn () => new RecaptchaService());
     }
 }
