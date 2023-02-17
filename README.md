@@ -53,7 +53,7 @@ composer require oneduo/laravel-recaptcha-enterprise
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-recaptcha-enterprise-config"
+php artisan vendor:publish --tag="recaptcha-enterprise-config"
 ```
 
 This is the contents of the published config file, you are required to set the variables accordingly:
