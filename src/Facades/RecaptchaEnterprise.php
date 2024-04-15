@@ -8,7 +8,7 @@ use Closure;
 use Illuminate\Support\Facades\Facade;
 use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
 use Oneduo\RecaptchaEnterprise\Services\RecaptchaService;
-use Oneduo\RecaptchaEnterprise\Tests\Mocks\FakeRecaptchaEnterprise;
+use Oneduo\RecaptchaEnterprise\Mocks\FakeRecaptchaEnterprise;
 
 /**
  * @method static static setThreshold(float $threshold)
