@@ -66,7 +66,7 @@ class Recaptcha implements Rule
 
     public function message(): string
     {
-        return __('recaptcha-enterprise::validation.recaptcha', [
+        return __('validation.recaptcha', [
             'reason' => $this->reason ? InvalidReason::name($this->reason) : 'Unknown reason',
         ]);
     }
