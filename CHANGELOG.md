@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-recaptcha-enterprise` will be documented in this file.
 
+## v0.4 - 2024-05-11
+
+### What's Changed
+
+* build(deps): bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/20
+
+**Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.3...v0.4
+
 ## v0.3 - 2024-03-18
 
 **Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.2.2...v0.3
