@@ -21,7 +21,6 @@ class Recaptcha implements Rule
     /**
      * @param  string  $attribute
      * @param  string  $value
-     * @return bool
      *
      * @throws \Google\ApiCore\ApiException
      * @throws \Oneduo\RecaptchaEnterprise\Exceptions\MissingPropertiesException

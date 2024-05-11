@@ -35,7 +35,7 @@ class RecaptchaEnterprise extends Facade
         return app(RecaptchaService::class)->assess($token);
     }
 
-    public static function fake(bool $alwaysValid = null, ?Closure $callback = null): RecaptchaContract
+    public static function fake(?bool $alwaysValid = null, ?Closure $callback = null): RecaptchaContract
     {
         return tap(static::getFacadeRoot(), function (RecaptchaService $fake) use ($alwaysValid, $callback) {
             static::swap(is_callable($callback) ? $callback($fake) : new FakeRecaptchaEnterprise($alwaysValid));
