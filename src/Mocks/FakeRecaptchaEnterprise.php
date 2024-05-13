@@ -10,6 +10,9 @@ use Illuminate\Support\Carbon;
 use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
 use RuntimeException;
 
+/**
+ * @codeCoverageIgnore
+ */
 class FakeRecaptchaEnterprise implements RecaptchaContract
 {
     public ?float $threshold;
