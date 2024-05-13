@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Oneduo\RecaptchaEnterprise\Tests;
 
 use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
-use Oneduo\RecaptchaEnterprise\RecaptchaEnterpriseServiceProvider;
 use Oneduo\RecaptchaEnterprise\Mocks\FakeRecaptchaEnterprise;
+use Oneduo\RecaptchaEnterprise\RecaptchaEnterpriseServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
