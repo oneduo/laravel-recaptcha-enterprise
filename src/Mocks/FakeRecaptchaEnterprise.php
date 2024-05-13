@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Oneduo\RecaptchaEnterprise\Tests\Mocks;
+namespace Oneduo\RecaptchaEnterprise\Mocks;
 
 use Carbon\CarbonInterval;
 use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties;
@@ -10,6 +10,9 @@ use Illuminate\Support\Carbon;
 use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
 use RuntimeException;
 
+/**
+ * @codeCoverageIgnore
+ */
 class FakeRecaptchaEnterprise implements RecaptchaContract
 {
     public ?float $threshold;
