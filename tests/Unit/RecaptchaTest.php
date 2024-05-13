@@ -95,7 +95,7 @@ it('validates with rule and returns proper message', function () {
 
     $this->expectException(ValidationException::class);
 
-    $this->expectExceptionMessage(__('validation.recaptcha'));
+    $this->expectExceptionMessage(__('recaptcha-enterprise::validation.recaptcha', ['reason' => 'EXPIRED']));
 
     $validator->validate();
 });
