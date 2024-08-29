@@ -2,6 +2,21 @@
 
 All notable changes to `laravel-recaptcha-enterprise` will be documented in this file.
 
+## v0.4.2 - 2024-08-29
+
+### What's Changed
+
+* test: fixed wrong localization test for validation by @Rezrazi in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/25
+* fix: move mocks to src directory by @rdesorme in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/21
+* build(deps): bump dependabot/fetch-metadata from 2.1.0 to 2.2.0 by @dependabot in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/26
+
+### New Contributors
+
+* @Rezrazi made their first contribution in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/25
+* @rdesorme made their first contribution in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/21
+
+**Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.4.1...v0.4.2
+
 ## v0.4.1 - 2024-05-11
 
 ### What's Changed
