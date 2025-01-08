@@ -2,6 +2,14 @@
 
 All notable changes to `laravel-recaptcha-enterprise` will be documented in this file.
 
+## v0.4.3 - 2025-01-08
+
+### What's Changed
+
+* build(deps): bump codecov/codecov-action from 4 to 5 by @dependabot in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/28
+
+**Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.4.2...v0.4.3
+
 ## v0.4.2 - 2024-08-29
 
 ### What's Changed
