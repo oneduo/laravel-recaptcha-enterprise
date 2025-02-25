@@ -7,7 +7,7 @@ namespace Oneduo\RecaptchaEnterprise\Services;
 use Carbon\CarbonInterval;
 use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
 use Google\Cloud\RecaptchaEnterprise\V1\Event;
-use Google\Cloud\RecaptchaEnterprise\V1\RecaptchaEnterpriseServiceClient as RecaptchaClient;
+use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient as RecaptchaClient;
 use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties;
 use Illuminate\Support\Carbon;
 use Oneduo\RecaptchaEnterprise\Contracts\RecaptchaContract;
