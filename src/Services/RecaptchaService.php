@@ -6,6 +6,7 @@ namespace Oneduo\RecaptchaEnterprise\Services;
 
 use Carbon\CarbonInterval;
 use Google\Cloud\RecaptchaEnterprise\V1\Assessment;
+use Google\Cloud\RecaptchaEnterprise\V1\CreateAssessmentRequest;
 use Google\Cloud\RecaptchaEnterprise\V1\Event;
 use Google\Cloud\RecaptchaEnterprise\V1\Client\RecaptchaEnterpriseServiceClient as RecaptchaClient;
 use Google\Cloud\RecaptchaEnterprise\V1\TokenProperties;
@@ -63,9 +64,13 @@ class RecaptchaService implements RecaptchaContract
     public function assess(string $token): static
     {
         $this->initAssessmentForEvent($this->event($token));
+        
+        $request = (new CreateAssessmentRequest())
+            ->setParent($this->projectName())
+            ->setAssessment($this->assessment);
 
         // we run the assessment through the reCAPTCHA Enterprise API client
-        $this->assessment = $this->client->createAssessment($this->projectName(), $this->assessment);
+        $this->assessment = $this->client->createAssessment($request);
 
         // The SDK documentation recommends closing the connection after each request.
         $this->close();
