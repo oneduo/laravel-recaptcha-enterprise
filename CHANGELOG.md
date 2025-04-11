@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-recaptcha-enterprise` will be documented in this file.
 
+## v0.5.0 - 2025-04-11
+
+### What's Changed
+
+* build(deps): bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/29
+* build(deps): bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/oneduo/laravel-recaptcha-enterprise/pull/30
+
+**Full Changelog**: https://github.com/oneduo/laravel-recaptcha-enterprise/compare/v0.4.3...v0.5.0
+
 ## v0.4.3 - 2025-01-08
 
 ### What's Changed
